@@ -1,6 +1,10 @@
-def main():
-    print("Hello from streamlit-respect!")
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
 
+st.set_page_config(
+    page_title="シンプルアプリ",
+    layout="wide"
+        )
 
-if __name__ == "__main__":
-    main()
+st.title('メイン')
