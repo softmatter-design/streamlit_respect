@@ -42,17 +42,11 @@ def show_mod_df(df, base):
 		init_g = df.iloc[base,1]
 		cut_df = df.loc[base:]
 		#
-		cut_df['Mod. Time']=cut_df['Time']-init_time
-		cut_df['Norm. G(t)']=cut_df['G(t)']/init_g
-	st.subheader(f"選択した列のデータを{base}行目から表示")
+	cut_df['Mod. Time']=cut_df['Time']-init_time
+	cut_df['Norm. G(t)']=cut_df['G(t)']/init_g
+	st.subheader("変更後のデータフレームを表示")
 	st.dataframe(cut_df)  
-	return cut_df
-
-# def save_csv(df):
-# 	csv_data=df.to_csv(index=False)
-# 	st.download_button(
-# 		label='Download CSV', data=csv_data, file_name='mod_data.csv', mime='text/csv'
-# 	)
+	return cut_df.reset_index(drop=True)
 	
 ###
 if __name__ == "__main__":

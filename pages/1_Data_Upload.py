@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from scipy.optimize import least_squares
+
 ###
 ### Main ###
 def main():

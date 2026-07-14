@@ -27,14 +27,18 @@ def main():
 	return
 
 # グラフ生成関数
-def create_plot(title, x, y):
-    fig, ax = plt.subplots()
-    ax.plot(x, y)
-    ax.set_title(title)
-    ax.set_xlabel("X-axis")
-    ax.set_ylabel("Y-axis")
-    fig.tight_layout()
-    return fig
+def create_plot(cond):
+	fig, ax = plt.subplots()
+	#
+	ax.plot(cond['x'], cond['y'])
+	ax.set_title(cond['title'])
+	ax.set_xlabel(cond['x_label'])
+	ax.set_ylabel(cond['y_label'])
+	ax.set_xscale(cond['x_scale'])
+	ax.set_yscale(cond['y_scale'])
+	#
+	fig.tight_layout()
+	return fig
 
 # ZIP作成関数
 def create_zip(figs):
@@ -55,13 +59,28 @@ def create_zip(figs):
 	return zip_buffer
 
 def make_graph(df):
-	time = df['Mod. Time'][1:].to_numpy()
-	gt = df['G(t)'][1:].to_numpy()
-	ngt = df['Norm. G(t)'][1:].to_numpy()
+	cond_1 = {
+		"title": "G(t)",
+		"x": df['Mod. Time'][1:].to_numpy(),
+		"y": df['G(t)'][1:].to_numpy(),
+		"x_label": "Time",
+		"y_label": "G(t)",
+		"x_scale": "log",
+		"y_scale": "log"
+	}
+	cond_2 = {
+		"title": "Norm. G(t)",
+		"x": df['Mod. Time'][1:].to_numpy(),
+		"y": df['Norm. G(t)'][1:].to_numpy(),
+		"x_label": "Time",
+		"y_label": "Norm. G(t)",
+		"x_scale": "log",
+		"y_scale": "log"
+	}
 	# グラフ作成
 	figs = [
-		create_plot("G(t)", time, gt),
-		create_plot("Norm. G(t)", time, ngt),
+		create_plot(cond_1),
+		create_plot(cond_2)
 	]
 
 	# 表示
@@ -79,52 +98,7 @@ def make_graph(df):
 		file_name=f"graphs_{datetime.now().strftime('%Y%m%d_%H%M%S')}.zip",
 		mime="application/zip"
 	)
-
 	return
-
-
-
-
-
-
-
-
-
-
-# def plot(df):
-# 	time = df['Mod. Time'][1:].to_numpy()
-# 	gt = df['G(t)'][1:].to_numpy()
-# 	ngt = df['Norm. G(t)'][1:].to_numpy()
-# 	#
-# 	g_type = st.selectbox('Select Graph', ['G(t)', 'Norm.G(t)'])
-# 	fig, ax = plt.subplots(figsize=(4, 4)) 
-# 	#
-# 	if 'G(t)' in g_type:
-# 		ax.plot(time, gt)
-# 		ax.set_xlabel('Time')
-# 		ax.set_ylabel('G(t)')
-# 	elif 'Norm.G(t)' in g_type:
-# 		ax.plot(time, ngt)
-# 		ax.set_xlabel('Time')
-# 		ax.set_ylabel('Norm.G(t)')
-# 	#
-# 	ax.set_xscale('log')
-# 	ax.set_yscale('log')
-# 	#
-# 	fn = 'graph.png'
-# 	img = io.BytesIO()
-# 	plt.savefig(img, format='png')
-
-# 	btn = st.download_button(
-# 	label="Download graph as PNG",
-# 	data=img,
-# 	file_name=fn,
-# 	mime="image/png"
-# 	)
-# 	#
-# 	st.pyplot(fig)
-
-# 	return
 
 ###
 if __name__ == "__main__":
