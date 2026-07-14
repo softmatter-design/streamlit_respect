@@ -14,7 +14,7 @@ def main():
 		st.write('データはまだ選択されていません')
 	else:
 		st.write('現時点でのデータ形式は以下です')
-		df = st.session_state.sel_df.dropna()
+		df = st.session_state.sel_df.dropna().reset_index(drop=True)
 		st.dataframe(df)
 		cut_rows(df)
 
