@@ -37,7 +37,7 @@ def show_mod_df(df, base):
 		cut_df = df
 		init_time = 0
 		init_g = df.iloc[0,1]
-	elif base > 1:
+	else:
 		init_time = df.iloc[base-1,0]
 		init_g = df.iloc[base,1]
 		cut_df = df.loc[base:]
