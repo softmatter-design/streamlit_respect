@@ -71,6 +71,7 @@ numpy==2.5.1
     #   matplotlib
     #   pandas
     #   pydeck
+    #   scipy
     #   streamlit
 openpyxl==3.1.5
     # via streamlit-respect (pyproject.toml)
@@ -113,6 +114,8 @@ rpds-py==2026.6.3
     # via
     #   jsonschema
     #   referencing
+scipy==1.18.0
+    # via streamlit-respect (pyproject.toml)
 six==1.17.0
     # via python-dateutil
 smmap==5.0.3
