@@ -14,8 +14,9 @@ def main():
 		st.write('データはまだ選択されていません')
 	else:
 		st.write('現時点でのデータ形式は以下です')
-		st.dataframe(st.session_state.sel_df)
-		cut_rows(st.session_state.sel_df)
+		df = st.session_state.sel_df.dropna()
+		st.dataframe(df)
+		cut_rows(df)
 
 	if st.button("これで良ければクリック"):
 		st.success('このページは終了')
@@ -36,12 +37,13 @@ def show_mod_df(df, base):
 		cut_df = df
 		init_time = 0
 		init_g = df.iloc[0,1]
-	elif base > 2:
+	elif base > 1:
 		init_time = df.iloc[base-1,0]
 		init_g = df.iloc[base,1]
 		cut_df = df.loc[base:]
-	cut_df['Mod. Time']=cut_df['Time']-init_time
-	cut_df['Norm. G(t)']=cut_df['G(t)']/init_g
+		#
+		cut_df['Mod. Time']=cut_df['Time']-init_time
+		cut_df['Norm. G(t)']=cut_df['G(t)']/init_g
 	st.subheader(f"選択した列のデータを{base}行目から表示")
 	st.dataframe(cut_df)  
 	return cut_df

@@ -141,4 +141,5 @@ websockets==16.0
     # via streamlit
 zope-interface==8.5
     # via datetime
-git+https://github.com/shane5ul/pyReSpect-time.git#egg=pyReSpect-time
+git+https://github.com/shane5ul/pyReSpect-time.git
+    # 
