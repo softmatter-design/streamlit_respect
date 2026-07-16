@@ -19,6 +19,7 @@ st.markdown("---")
 
 st.header("具体的な処理プロセス")
 st.subheader('左のメニューバーから順次処理を選択')
+st.subheader('メニューバーの内容説明は以下のタグで見てください')
 
 tab1, tab2,tab3, tab4, tab5 = st.tabs(['Data_Upload', 'Select_Columns', 'Modify_Data', 'Plot_Data', 'Run ReSpect'])
 with tab1:
