@@ -8,7 +8,7 @@ def main():
 		page_title="応力緩和処理サイト",
 		layout="wide"
 			)
-	st.title('データ選択')
+	st.title('アップロードするファイルを選択')
 	#
 	if 'load_df' in st.session_state:
 		st.write(f'Selected File = {st.session_state.filename}')
