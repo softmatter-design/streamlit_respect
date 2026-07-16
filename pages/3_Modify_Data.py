@@ -8,7 +8,7 @@ def main():
 		page_title="応力緩和処理サイト",
 		layout="wide"
 			)
-	st.title('データ選択')
+	st.title('必要なカラムを選択')
 	#
 	if 'sel_df' not in st.session_state:
 		st.write('データはまだ選択されていません')
