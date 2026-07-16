@@ -5,7 +5,7 @@ import io
 ###
 def main():
 	st.set_page_config(
-		page_title="シンプルアプリ",
+		page_title="応力緩和処理サイト",
 		layout="wide"
 			)
 	st.title('データ選択')
