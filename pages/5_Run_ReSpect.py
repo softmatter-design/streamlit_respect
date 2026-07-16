@@ -43,38 +43,58 @@ def run_respect(df):
 	files = [[df_cont, df_disc], [df_gt]]
 	title = ['緩和関数の連続と離散での推定値', '推定値と実測の応力緩和関数との比較']
 	#
-	cont_time=solver.continuous.s
-	cont_H=np.exp(solver.continuous.H)
-	disc_tau=solver.discrete.tau
-	disc_g=solver.discrete.g
-	#
-	t=solver.t
-	Gt=solver.Gt
-	cont_fit=solver.continuous.G_fit
-	disc_fit=solver.discrete.G_fit
-	#
 	cond_1 = {
-		"title": "G(t)",
+		"title": r'$g, h(\tau)$',
 		"data": [
 					[solver.continuous.s,
 					np.exp(solver.continuous.H),
 					'CRS',
-					'none'
+					'none',
+					'-'
 					],
 					[
 						solver.discrete.tau,
 						solver.discrete.g,
 						'DRS',
-						's'
+						's',
+						'-'
 					]
 		],
 		"x_label": r'$\tau$',
 		"y_label": r'$g, h(\tau)$',
 	}
+	cond_2 = {
+		"title": "G(t)",
+		"data": [
+					[solver.t,
+					solver.Gt,
+					'Data',
+					'x',
+					''
+					],
+					[
+						solver.t,
+						solver.continuous.G_fit,
+						'continuous fit',
+						'none',
+						'-'
+					],
+					[
+						solver.t,
+						solver.discrete.G_fit,
+						'discrete fit',
+						'none',
+						'--'
+					]
+		],
+		"x_label": r'$t$',
+		"y_label": r'$G(t)$',
+	}
 	# グラフ作成
 	figs = [
-		plot_base_1(cond_1),
-		plot_base_2(t, Gt, cont_fit, disc_fit)
+		plot_base(cond_1),
+		plot_base(cond_2)
+		# plot_base_2(t, Gt, cont_fit, disc_fit)
 	]
 	# 表示
 	show_columns(files, figs, title)
@@ -90,26 +110,14 @@ def run_respect(df):
 
 	return
 
-def plot_base_1(cond):
+def plot_base(cond):
 	# ---- discrete modes overlaid on continuous spectrum ----
 	fig, ax = plt.subplots()
 	ax.set_title(cond['title'])
 	for data in cond['data']:
-		ax.loglog(data[0], data[1], label=data[2], marker=data[3])
+		ax.loglog(data[0], data[1], label=data[2], marker=data[3], linestyle=data[4])
 	ax.set_xlabel(cond['x_label'])
 	ax.set_ylabel(cond['y_label'])
-	ax.legend()
-	fig.tight_layout()
-	return fig
-
-def plot_base_2(t, Gt, cont_fit, disc_fit):
-	# ---- Right: G(t) data vs continuous and discrete fits ----
-	fig, ax = plt.subplots()
-	ax.loglog(t, Gt, 'x', label='data', c='gray')
-	ax.loglog(t, cont_fit, label='continuous fit')
-	ax.loglog(t, disc_fit, '--', label='discrete fit')
-	ax.set_xlabel(r'$t$')
-	ax.set_ylabel(r'$G(t)$')
 	ax.legend()
 	fig.tight_layout()
 	return fig
@@ -127,7 +135,6 @@ def show_columns(files, figs, title):
 
 # ZIP作成関数
 def create_zip(figs, files):
-	#
 	zip_buffer = io.BytesIO()
 	with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
 		# fig 出力
